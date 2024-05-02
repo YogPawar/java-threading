@@ -1,6 +1,9 @@
 package com.threads;
 
 import java.io.IOException;
+import java.lang.reflect.Executable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 class CopyTask implements Runnable {
 
@@ -29,14 +32,17 @@ public class FileTransfer {
     String sourceFileOne = "T:\\java-threading\\threads\\a";
     String sourceFilesTwo = "T:\\java-threading\\threads\\b";
 
-    String destFieTwo = "T:\\java-threading\\threads\\d";
-    String destFieOne = "T:\\java-threading\\threads\\c";
+    String destFieTwo = "T:\\java-threading\\threads\\e";
+    String destFieOne = "T:\\java-threading\\threads\\f";
 
-    Thread t1 = new Thread(new CopyTask(sourceFileOne, destFieOne));
-    t1.start();
+    //  new Thread(new CopyTask(sourceFileOne, destFieOne)).start();
 
-    Thread t2 = new Thread(new CopyTask(sourceFilesTwo, destFieTwo));
-    t2.start();
+    //  new Thread(new CopyTask(sourceFilesTwo, destFieTwo)).start();
+
+    //Using ExecutorService
+    ExecutorService executorService = Executors.newFixedThreadPool(5);
+    executorService.execute(new CopyTask(sourceFileOne, destFieOne));
+    executorService.execute(new CopyTask(sourceFilesTwo, destFieTwo));
 
   }
 }
